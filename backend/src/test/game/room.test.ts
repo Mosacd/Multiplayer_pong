@@ -1,6 +1,6 @@
 import { assert } from 'chai';
-import { createGameRoom } from '../../src/game/room';
-import { GAME_CONFIG } from '../../src/config';
+import { createGameRoom } from '../../game/room';
+import { GAME_CONFIG } from '../../config';
 
 describe('Room Management', () => {
   it('should create a game room with two players', () => {

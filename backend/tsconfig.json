@@ -9,8 +9,8 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
   },
-  "include": ["src/**/*"],
+  "include": ["src/**/*", "test/game/room.test.ts", "test/game/room.test.ts", "test/game/room.test.ts"],
   "exclude": ["node_modules", "dist"]
 }

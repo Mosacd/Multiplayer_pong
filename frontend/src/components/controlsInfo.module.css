@@ -1,0 +1,14 @@
+.controlsInfo {
+  text-align: center;
+  color: white;
+}
+
+.controlsInfo p {
+  font-size: 1.1rem;
+  margin-bottom: 5px;
+}
+
+.controlsText {
+  font-size: 1.2rem;
+  opacity: 0.8;
+}

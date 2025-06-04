@@ -1,0 +1,13 @@
+.instructions {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  color: white;
+  opacity: 0.8;
+  font-size: 1.2rem;
+  text-align: start;
+}
+
+.instructions p {
+  margin-bottom: 3px;
+}

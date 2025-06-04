@@ -1,0 +1,44 @@
+.gameField {
+  position: relative;
+  background-color: black;
+  border: 3px solid rgba(255, 255, 255, 0.566);
+  border-radius: 4px;
+}
+
+.centerLine {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: 3px;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.566);;
+  opacity: 0.5;
+  transform: translateX(-50%);
+}
+
+.paddle {
+  position: absolute;
+  background-color: white;
+}
+
+.leftPaddle {
+  left: 0;
+}
+
+.rightPaddle {
+  right: 0;
+}
+
+.ownPaddle {
+  opacity: 1;
+}
+
+.paddle:not(.ownPaddle) {
+  opacity: 0.6;
+}
+
+.ball {
+  position: absolute;
+  background-color: white;
+  border-radius: 50%;
+}

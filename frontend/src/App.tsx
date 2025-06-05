@@ -1,35 +1,57 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React from 'react';
+import { useSocket } from './hooks/useSocketConnection';
+import { useGameState } from './hooks/useGameState';
+import { useKeyboardControls } from './hooks/usePaddleControls';
+import { ScoreBoard } from './components/ScoreBoard';
+import { GameField } from './components/GameField';
+import { GameMenu } from './components/GameMenu';
+import { GameOverlay } from './components/GameOverlay';
+import { ControlsInfo } from './components/ControlsInfo';
+import { Instructions } from './components/Instructions';
+import './App.css';
 
-function App() {
-  const [count, setCount] = useState(0)
+const PongGame: React.FC = () => {
+  const { socket, connectionStatus } = useSocket();
+  const { gameState, gameData, playerSide, config, resetGame, joinGame } = useGameState(socket);
+  
+  useKeyboardControls(socket, gameState);
+
+  const renderGame = () => {
+    if (!gameData || !config) return null;
+
+    return (
+      <div className="game-container">
+        <ScoreBoard players={Object.values(gameData.players)} />
+        <div style={{ position: 'relative' }}>
+          <GameField gameData={gameData} config={config} playerSide={playerSide} />
+          {gameState === 'gameOver' && (
+            <GameOverlay 
+              winner={gameData.winner} 
+              socketId={socket?.id} 
+              onReset={resetGame} 
+            />
+          )}
+        </div>
+        <ControlsInfo playerSide={playerSide} />
+      </div>
+    );
+  };
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div className="app">
+      <div className="header">
+        <h1>MULTIPLAYER PONG</h1>
+        <p className="subtitle">Real-time multiplayer Pong game</p>
+        <p className="status">Status: {connectionStatus}</p>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
 
-export default App
+      <GameMenu gameState={gameState} socket={socket} onJoinGame={joinGame} />
+      
+      {(gameState === 'playing' || gameState === 'gameOver') && renderGame()}
+
+      <Instructions winningScore={config?.WINNING_SCORE || 5} />
+    </div>
+  );
+};
+
+export default PongGame;
